@@ -5,8 +5,8 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.ecomm.orderservice.controller.dto.ItemDto;
-import com.ecomm.orderservice.controller.dto.OrderRequestDto;
+import com.ecomm.orderservice.dto.ItemDto;
+import com.ecomm.orderservice.dto.OrderRequestDto;
 import com.ecomm.orderservice.model.Item;
 import com.ecomm.orderservice.model.Orders;
 import com.ecomm.orderservice.repository.ItemRepository;
@@ -23,8 +23,8 @@ public class OrderServiceImpl implements OrderService {
 	
 	private final ItemRepository itemRepository;
 	
-	
-	public void placeOrder(OrderRequestDto orderRequestDto) {
+	@Override
+	public void placeOrder(OrderRequestDto orderRequestDto,String traceId) {
 
 		Orders order= Orders.builder().orderNumber(UUID.randomUUID().toString())
 				.itemList(orderRequestDto.getItemList().stream().map(itemDto -> mapToEntity(itemDto)).toList()).build();
