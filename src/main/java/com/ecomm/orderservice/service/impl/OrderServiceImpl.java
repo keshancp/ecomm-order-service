@@ -3,6 +3,7 @@ package com.ecomm.orderservice.service.impl;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecomm.orderservice.dto.ItemDto;
@@ -19,9 +20,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-	private final OrderRepository orderRepository;
-	
-	private final ItemRepository itemRepository;
+	@Autowired
+	private OrderRepository orderRepository;
+
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	@Override
 	public void placeOrder(OrderRequestDto orderRequestDto,String traceId) {
@@ -45,7 +48,6 @@ public class OrderServiceImpl implements OrderService {
 		item.setItemCode(itemDto.getItemCode());
 		item.setQuantity(itemDto.getQuantity());
 		return item;
-
 	}
 	
 	private Item setOrderId(Orders order,Item item) {
