@@ -2,7 +2,13 @@ package com.ecomm.orderservice.service.impl;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
+
+import com.ecomm.ecommlib.exception.ECommException;
+import com.ecomm.orderservice.dto.OrderDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,21 +31,25 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private ItemRepository itemRepository;
+
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@Override
-	public void placeOrder(OrderRequestDto orderRequestDto,String traceId) {
+	public OrderDto placeOrder(OrderRequestDto orderRequestDto,String traceId) throws ECommException {
 
 		Orders order= Orders.builder().orderNumber(UUID.randomUUID().toString())
-				.itemList(orderRequestDto.getItemList().stream().map(itemDto -> mapToEntity(itemDto)).toList()).build();
+				.itemList(orderRequestDto.getItemList().stream().map(itemDto -> mapToEntity(itemDto)).collect(Collectors.toList())).build();
 
 		//save order and items
-		orderRepository.save(order);
+		Orders newOrder= orderRepository.save(order);
 		
 		//update order id
-		itemRepository.saveAll(order.getItemList().stream().map(item->setOrderId(order,item)).toList());
-		
-		
-		
+		itemRepository.saveAll(order.getItemList().stream().map(item->setOrderId(order,item)).collect(Collectors.toList()));
+
+		OrderDto newOrderDto=objectMapper.convertValue(newOrder,OrderDto.class);
+
+		return newOrderDto;
 	}
 
 	private Item mapToEntity(ItemDto itemDto) {
