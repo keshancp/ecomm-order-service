@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-import com.ecomm.ecommlib.exception.ECommException;
+
 import com.ecomm.orderservice.dto.OrderDto;
+import com.ecomm.orderservice.exception.ECommOrderException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
 	private ObjectMapper objectMapper;
 	
 	@Override
-	public OrderDto placeOrder(OrderRequestDto orderRequestDto,String traceId) throws ECommException {
+	public OrderDto placeOrder(OrderRequestDto orderRequestDto,String traceId) throws ECommOrderException {
 
 		Orders order= Orders.builder().orderNumber(UUID.randomUUID().toString())
 				.itemList(orderRequestDto.getItemList().stream().map(itemDto -> mapToEntity(itemDto)).collect(Collectors.toList())).build();

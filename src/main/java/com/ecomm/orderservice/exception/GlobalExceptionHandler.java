@@ -1,7 +1,6 @@
 package com.ecomm.orderservice.exception;
 
 
-import com.ecomm.ecommlib.exception.ECommException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +19,8 @@ import java.util.Map;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({ECommException.class})
-    public ResponseEntity<Object> handleECommException(ECommException exception){
+    @ExceptionHandler({ECommOrderException.class})
+    public ResponseEntity<Object> handleECommException(ECommOrderException exception){
         return new ResponseEntity<>("Something went wrong..", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

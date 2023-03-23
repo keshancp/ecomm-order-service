@@ -70,14 +70,6 @@
 			<artifactId>validation-api</artifactId>
 		</dependency>
 
-
-		<dependency>
-			<groupId>com.ecomm</groupId>
-			<artifactId>ecomm-lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>

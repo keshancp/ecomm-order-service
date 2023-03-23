@@ -1,10 +1,9 @@
 package com.ecomm.orderservice.controller;
 
 
-
-import com.ecomm.ecommlib.dto.ECommResponse;
-import com.ecomm.ecommlib.exception.ECommException;
+import com.ecomm.orderservice.dto.ECommInventoryResponse;
 import com.ecomm.orderservice.dto.OrderDto;
+import com.ecomm.orderservice.exception.ECommOrderException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,11 +31,11 @@ public class OrderController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> placeOrder(@Valid @RequestBody OrderRequestDto orderRequestDto, @RequestParam String traceId) throws ECommException {
+	public ResponseEntity<?> placeOrder(@Valid @RequestBody OrderRequestDto orderRequestDto, @RequestParam String traceId) throws ECommOrderException {
 		
 		OrderDto orderDto= orderService.placeOrder(orderRequestDto,traceId);
 		
-		return new ResponseEntity<>(new ECommResponse(HttpStatus.CREATED.value(),"Order Placed Successfully",orderDto),HttpStatus.CREATED);
+		return new ResponseEntity<>(new ECommInventoryResponse(HttpStatus.CREATED.value(),"Order Placed Successfully",orderDto),HttpStatus.CREATED);
 		
 	}
 	
