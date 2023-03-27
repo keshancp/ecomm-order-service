@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,8 +30,17 @@ public class Orders {
 	private Long id;
 	
 	private String orderNumber;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private List<Item> itemList;
+
+	@Override
+	public String toString() {
+		return "Orders{" +
+				"orderNumber='" + orderNumber + '\'' +
+				", itemList=" + itemList +
+				'}';
+	}
 
 }
